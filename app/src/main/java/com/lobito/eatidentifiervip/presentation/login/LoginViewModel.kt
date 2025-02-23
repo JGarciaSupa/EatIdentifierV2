@@ -11,35 +11,49 @@ import androidx.work.WorkManager
 import com.lobito.eatidentifiervip.data.remote.worker.SyncManager
 import com.lobito.eatidentifiervip.di.Qualifiers
 import com.lobito.eatidentifiervip.domain.model.User
+import com.lobito.eatidentifiervip.domain.usecase.empresas.GetEmpresasUseCase
+import com.lobito.eatidentifiervip.presentation.login.state.EmpresasState
+import com.lobito.eatidentifiervip.presentation.login.state.LoginState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val context : Context,
+    private val getEmpresasUseCase: GetEmpresasUseCase,
+
 ) : ViewModel() {
 
-    var state by mutableStateOf(LoginState())
+    var stateLogin by mutableStateOf(LoginState())
         private set
 
-    fun login(username: String, password: String) {
-        viewModelScope.launch {
-            state = state.copy(isloading = true)
-            Log.i("TAG", "login: $username $password")
-            delay(5000)
-            if(username == "a" && password == "a") {
+    var empresaState by mutableStateOf(EmpresasState())
+        private set
 
-                state = state.copy(
-                    user = User(0L,username, password),
-                    isloading = false
-                )
-            } else {
-                state = state.copy(
-//                    isError = "Usuario o contraseña incorrectos",
-                    isloading = false
+    init {
+        getEmpresas()  // Cargar las empresas al iniciar el ViewModel
+    }
+
+    fun getEmpresas() {
+        viewModelScope.launch {
+            getEmpresasUseCase().collect { empresas ->
+                empresaState = empresaState.copy(
+                    empresas = empresas,
+                    isLoading = false,
+                    error = if (empresas.isEmpty()) "No se encontraron empresas 😞" else ""
                 )
             }
         }
+        }
+
+    fun login(userName: String, password: String, idEmpresa: String) {
+        viewModelScope.launch {
+            stateLogin = stateLogin.copy(isloading = true)
+            delay(3000)
+            stateLogin = stateLogin.copy(isloading = false)
+        }
     }
+
 
     // ESTA FUNCION SERA PARA REFRESCAR EL TOKEN Y SUS DATOS CORRESPONDIENTES
     fun restartTokenSync() {

@@ -12,17 +12,15 @@ fun NavigationWrapper() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Splash) {
         composable<Splash> {
-            SplashScreen { navController.navigate(Login){
-                popUpTo(Login) { inclusive = true }} }
+            SplashScreen {
+                navController.navigate(Login){popUpTo(Login) { inclusive = true }} }
         }
 
         composable<Login> {
             LoginScreen()
-//            {
-////                navController.navigate(Home)
-//            }
-
-        }
+            {
+                navController.navigate(Home){popUpTo(Login) { inclusive = true }} }
+            }
 
 //        composable<Identification> {
 //            IdentificationScreen {

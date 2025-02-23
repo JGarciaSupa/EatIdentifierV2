@@ -1,4 +1,4 @@
-package com.lobito.eatidentifiervip.presentation.login
+package com.lobito.eatidentifiervip.presentation.login.state
 
 import com.lobito.eatidentifiervip.domain.model.User
 

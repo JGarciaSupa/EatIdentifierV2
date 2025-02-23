@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">AppBusesVIP</string>
+    <string name="app_name">EatIdentifier VIP</string>
+    <string name="app_logo">App Logo</string>
+    <string name="App_Comedores">ERP Comedores</string>
+    <string name="Iniciar_Sesion">Iniciar Sesión</string>
 </resources>

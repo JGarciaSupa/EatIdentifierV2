@@ -29,21 +29,6 @@ android {
         versionCode = 1
         versionName = "1.0.0"
 
-        val properties = Properties().apply {
-            load(rootProject.file("local.properties").inputStream())
-        }
-
-        buildConfigField("String", "API_SEGURIDAD_DEV", "\"${properties.getProperty("API_SEGURIDAD_DEV")}\"")
-        buildConfigField("String", "API_SEGURIDAD_PROD", "\"${properties.getProperty("API_SEGURIDAD_PROD")}\"")
-        buildConfigField("String", "API_BUSES_DEV", "\"${properties.getProperty("API_BUSES_DEV")}\"")
-        buildConfigField("String", "API_BUSES_PROD", "\"${properties.getProperty("API_BUSES_PROD")}\"")
-        buildConfigField("String", "API_EMPLOYEE_PROD", "\"${properties.getProperty("API_EMPLOYEE_PROD")}\"")
-        buildConfigField("String", "API_INVENTARIO_PROD", "\"${properties.getProperty("API_INVENTARIO_PROD")}\"")
-        buildConfigField("String", "USER_TOKEN_BUSES", "\"${properties.getProperty("USER_TOKEN_BUSES")}\"")
-        buildConfigField("String", "PASSWORD_TOKEN_BUSES", "\"${properties.getProperty("PASSWORD_TOKEN_BUSES")}\"")
-        buildConfigField("String", "USER_TOKEN_EMPLOYEE", "\"${properties.getProperty("USER_TOKEN_EMPLOYEE")}\"")
-        buildConfigField("String", "PASSWORD_TOKEN_EMPLOYEE", "\"${properties.getProperty("PASSWORD_TOKEN_EMPLOYEE")}\"")
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
     }

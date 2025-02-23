@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface EmpresaDao : BaseDao<EmpresaEntity> {
 
-    @Query("SELECT * FROM EmpresaEntity ORDER BY id DESC")
-    fun getAllEmpresas(): Flow<List<EmpresaEntity>> // Cambiado de suspend a Flow
+    @Query("SELECT * FROM EmpresaEntity")
+    fun getAllEmpresas(): Flow<List<EmpresaEntity>>
 
     @Query("DELETE FROM EmpresaEntity")
     suspend fun deleteAllEmpresas()

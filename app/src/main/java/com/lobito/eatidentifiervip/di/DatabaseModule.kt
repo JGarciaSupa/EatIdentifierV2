@@ -22,7 +22,7 @@ fun provideDatabase(context: Context): AppDatabase {
     return Room.databaseBuilder(
         context.applicationContext,
         AppDatabase::class.java,
-        "AppbusesVIP.db"
+        "EatIdentifierVIP.db"
     )
         .fallbackToDestructiveMigration()
         .build()

@@ -13,6 +13,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 
 class MyApplication : Application(), KoinComponent {
+
     override fun onCreate() {
         super.onCreate()
         startKoin {

@@ -21,5 +21,7 @@ val useCaseModule = module {
     factoryOf(::UpdateInventoryUseCase)
     factoryOf(::GetIdentificadorUseCase)
     factoryOf(::TokenBusesUseCase)
+
+    //EAT IDENTIFIER
     factoryOf(::GetEmpresasUseCase)
 }
