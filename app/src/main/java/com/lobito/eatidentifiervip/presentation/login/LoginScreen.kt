@@ -47,7 +47,6 @@ import org.koin.androidx.compose.koinViewModel
 fun LoginScreen(
     onNavigate: () -> Unit
 ) {
-//    val viewModel = viewModel<LoginViewModel>()
     val viewModel: LoginViewModel = koinViewModel()
 
     Surface {
@@ -68,73 +67,23 @@ private fun LoginContent(viewModel: LoginViewModel, onNavigate: () -> Unit) {
             .fillMaxSize()
             .padding(horizontal = 30.dp)
     ) {
-        LoginSection(viewModel,onNavigate)
+        val selectedEmpresa = remember { mutableStateOf<Empresa?>(null) }
+        SelectEmpresa(viewModel, selectedEmpresa)
+        Spacer(modifier = Modifier.height(30.dp))
+        LoginSection(viewModel, selectedEmpresa.value, onNavigate)
         Spacer(modifier = Modifier.height(30.dp))
         FooterSection()
     }
 }
 
 @Composable
-private fun LoginSection(viewModel: LoginViewModel, onNavigate: () -> Unit = {}) {
-//    val context = LocalContext.current
+private fun LoginSection(viewModel: LoginViewModel, selectedEmpresa: Empresa?, onNavigate: () -> Unit = {}) {
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
-    var expanded by rememberSaveable { mutableStateOf(false) }
-    var selectedEmpresa by remember { mutableStateOf<Empresa?>(null) }
     val uiColor = if (isSystemInDarkTheme()) Color.White else Color.DarkGray
 
-    val empresaState = viewModel.empresaState
     val loginState = viewModel.stateLogin
-
-    Spacer(modifier = Modifier.height(20.dp))
-
-// Selector de empresas
-    Box(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
-        OutlinedButton(
-            onClick = {  expanded = true },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = !empresaState.isLoading  // Desactivar mientras carga las empresas
-        ) {
-            Text(
-                text = selectedEmpresa?.razonSocial ?: "Selecciona una empresa",
-                color = uiColor
-            )
-        }
-        DropdownMenu(
-            modifier = Modifier
-                .fillMaxWidth(),
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
-        ) {
-            when {
-                empresaState.isLoading -> {
-                    DropdownMenuItem(
-                        onClick = { expanded = false },
-                        text = { Text(text = "Cargando empresas...") }
-                    )
-                }
-                empresaState.error.isNotBlank() -> {
-                    DropdownMenuItem(
-                        onClick = { expanded = false },
-                        text = { Text(text = empresaState.error) }
-                    )
-                }
-                else -> {
-                    empresaState.empresas.forEach { empresa ->
-                        DropdownMenuItem(
-                            onClick = {
-                                selectedEmpresa = empresa
-                                expanded = false
-                            },
-                            text = { Text(text = empresa.razonSocial) }
-                        )
-                    }
-                }
-            }
-        }
-    }
-
 
     Spacer(modifier = Modifier.height(16.dp))
 
@@ -174,14 +123,14 @@ private fun LoginSection(viewModel: LoginViewModel, onNavigate: () -> Unit = {})
         onClick = {
             viewModel.login(userName = username, password = password, idEmpresa = selectedEmpresa?.idEmpresa ?: "")
         },
-        enabled = !loginState.isloading,  // Deshabilitar mientras carga el login
+        enabled = !loginState.isLoading,  // Deshabilitar mientras carga el login
         colors = ButtonDefaults.buttonColors(
             containerColor = if (isSystemInDarkTheme()) MediumOrange else MediumOrange,
             contentColor = Color.White
         ),
         shape = RoundedCornerShape(16.dp)
     ) {
-        if (loginState.isloading) {
+        if (loginState.isLoading) {
             CircularProgressIndicator(color = Color.White, modifier = Modifier.size(20.dp))
         } else {
             Text(
@@ -192,6 +141,61 @@ private fun LoginSection(viewModel: LoginViewModel, onNavigate: () -> Unit = {})
     }
 }
 
+@Composable
+private fun SelectEmpresa(viewModel: LoginViewModel, selectedEmpresa: MutableState<Empresa?>) {
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    val uiColor = if (isSystemInDarkTheme()) Color.White else Color.DarkGray
+
+    val empresaState = viewModel.empresaState
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    // Selector de empresas
+    Box(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
+        OutlinedButton(
+            onClick = { expanded = true },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = !empresaState.isLoading  // Desactivar mientras carga las empresas
+        ) {
+            Text(
+                text = selectedEmpresa.value?.razonSocial ?: "Selecciona una empresa",
+                color = uiColor
+            )
+        }
+        DropdownMenu(
+            modifier = Modifier
+                .fillMaxWidth(),
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            when {
+                empresaState.isLoading -> {
+                    DropdownMenuItem(
+                        onClick = { expanded = false },
+                        text = { Text(text = "Cargando empresas...") }
+                    )
+                }
+                empresaState.error.isNotBlank() -> {
+                    DropdownMenuItem(
+                        onClick = { expanded = false },
+                        text = { Text(text = empresaState.error) }
+                    )
+                }
+                else -> {
+                    empresaState.empresas.forEach { empresa ->
+                        DropdownMenuItem(
+                            onClick = {
+                                selectedEmpresa.value = empresa
+                                expanded = false
+                            },
+                            text = { Text(text = empresa.razonSocial) }
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 @Composable

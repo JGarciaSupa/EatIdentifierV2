@@ -14,12 +14,14 @@ import com.lobito.eatidentifiervip.data.local.model.*
         AbsentismoEntity::class,
         InventoryEntity::class,
         EmpresaEntity::class,
+        SessionEntity::class,
     ],
-    version = 3,
+    version = 4,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun absentismoDao(): AbsentismoDao
     abstract fun inventoryDao(): InventoryDao
     abstract fun empresaDao(): EmpresaDao
+    abstract fun sessionDao(): SessionDao
 }

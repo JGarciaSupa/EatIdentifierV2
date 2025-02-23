@@ -1,11 +1,14 @@
 package com.lobito.eatidentifiervip.domain.repository
 
-import com.lobito.eatidentifiervip.domain.model.User
+import com.lobito.eatidentifiervip.data.remote.model.RequestSessionDTO
+import com.lobito.eatidentifiervip.data.remote.model.ResponseSessionDTO
+import com.lobito.eatidentifiervip.domain.model.Session
 
 interface UserRepository {
-    suspend fun insertUser(user: User): User
-    suspend fun getUserByUsername(username: String): User?
-    suspend fun updateFlagById(userId: Long, flag: Int) // Actualiza usando el ID en lugar del username
-    suspend fun getLoggedInUser(): User?
-    suspend fun logoutUser() // Método para hacer logout
+    suspend fun trunkUsersPending()
+    suspend fun insertSession(session : Session)
+    suspend fun updateSession(session : Session)
+    suspend fun logoutSession(idUser : String)
+    suspend fun getSessionPending() : Session
+    suspend fun postLoginFromApi(session: RequestSessionDTO): Session
 }

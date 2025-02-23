@@ -8,10 +8,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.WorkManager
+import com.lobito.eatidentifiervip.data.common.Resource
+import com.lobito.eatidentifiervip.data.common.Resource.Success
 import com.lobito.eatidentifiervip.data.remote.worker.SyncManager
 import com.lobito.eatidentifiervip.di.Qualifiers
+import com.lobito.eatidentifiervip.domain.model.Session
 import com.lobito.eatidentifiervip.domain.model.User
 import com.lobito.eatidentifiervip.domain.usecase.empresas.GetEmpresasUseCase
+import com.lobito.eatidentifiervip.domain.usecase.user.PostLoginUseCase
 import com.lobito.eatidentifiervip.presentation.login.state.EmpresasState
 import com.lobito.eatidentifiervip.presentation.login.state.LoginState
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +25,7 @@ import kotlinx.coroutines.launch
 class LoginViewModel(
     private val context : Context,
     private val getEmpresasUseCase: GetEmpresasUseCase,
-
+    private val postLoginUseCase: PostLoginUseCase,
 ) : ViewModel() {
 
     var stateLogin by mutableStateOf(LoginState())
@@ -35,7 +39,7 @@ class LoginViewModel(
     }
 
     fun getEmpresas() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO){
             getEmpresasUseCase().collect { empresas ->
                 empresaState = empresaState.copy(
                     empresas = empresas,
@@ -47,10 +51,35 @@ class LoginViewModel(
         }
 
     fun login(userName: String, password: String, idEmpresa: String) {
-        viewModelScope.launch {
-            stateLogin = stateLogin.copy(isloading = true)
-            delay(3000)
-            stateLogin = stateLogin.copy(isloading = false)
+        viewModelScope.launch(Dispatchers.IO){
+            val session = Session(
+                email = userName,
+                password = password,
+                idEmpresa = idEmpresa,
+            )
+           val response = postLoginUseCase(session)
+            when(response){
+                is Success -> {
+                    stateLogin = stateLogin.copy(
+                        isLoading = false,
+                        error = "",
+                        data = response.data
+                    )
+                    restartTokenSync()
+                }
+                is Resource.Error -> {
+                    stateLogin = stateLogin.copy(
+                        isLoading = false,
+                        error = response.message ?: "Ocurrió un error desconocido"
+                    )
+                }
+                is Resource.Loading -> {
+                    stateLogin = stateLogin.copy(
+                        isLoading = true,
+                        error = ""
+                    )
+                }
+            }
         }
     }
 

@@ -1,38 +1,41 @@
 package com.lobito.eatidentifiervip.data.repository
 
-import com.lobito.eatidentifiervip.data.local.dao.UserDao
-import com.lobito.eatidentifiervip.data.local.model.UserEntity
-import com.lobito.eatidentifiervip.domain.model.User
+import com.lobito.eatidentifiervip.data.local.dao.SessionDao
+import com.lobito.eatidentifiervip.data.local.model.toDatabase
+import com.lobito.eatidentifiervip.data.remote.model.RequestSessionDTO
+import com.lobito.eatidentifiervip.data.remote.service.AppService
+import com.lobito.eatidentifiervip.domain.model.Session
+import com.lobito.eatidentifiervip.domain.model.toDomain
 import com.lobito.eatidentifiervip.domain.repository.UserRepository
 
-class LoginRepositoryImpl(private val userDao: UserDao) : UserRepository {
+class LoginRepositoryImpl(
+    private val sessionDao: SessionDao,
+    private val apiService: AppService,
+    ) : UserRepository {
 
-    override suspend fun insertUser(user: User): User {
-        val entity = UserEntity(username = user.username, password = user.password)
-        val userId = userDao.insert(entity)
-        return User(userId, user.username, user.password)
+    override suspend fun trunkUsersPending() {
+        sessionDao.trunkUsersPending()
     }
 
-    override suspend fun getUserByUsername(username: String): User? {
-        val entity = userDao.getUserByUsername(username)
-        return entity?.let { User(it.id, it.username, it.password) }
+    override suspend fun insertSession(session: Session) {
+        sessionDao.insert(session.toDatabase())
     }
 
-    override suspend fun updateFlagById(userId: Long, flag: Int) {
-        userDao.updateFlagById(userId, flag)
+    override suspend fun updateSession(session: Session) {
+        sessionDao.update(session.toDatabase())
     }
 
-    override suspend fun getLoggedInUser(): User? {
-        val entity = userDao.getLoggedInUser()
-        return entity?.let { User(it.id, it.username, it.password) }
+    override suspend fun logoutSession(idUser: String) {
+        sessionDao.logoutSession(idUser)
     }
 
-    override suspend fun logoutUser() {
-        val loggedInUser = userDao.getLoggedInUser()
-        loggedInUser?.let {
-            userDao.updateFlagById(it.id, 1) // Cambiamos el flag a 1 (sesión terminada)
-        }
+    override suspend fun getSessionPending(): Session {
+        return sessionDao.getSessionOpen().toDomain()
+
     }
 
+    override suspend fun postLoginFromApi(requestSessionDTO: RequestSessionDTO): Session {
+        return apiService.postLogin(requestSessionDTO).data!!.toDomain(requestSessionDTO.email, requestSessionDTO.password, requestSessionDTO.idEmpresa)
+    }
 
 }

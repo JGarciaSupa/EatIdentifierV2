@@ -1,8 +1,10 @@
 package com.lobito.eatidentifiervip.presentation.login.state
 
+import com.lobito.eatidentifiervip.domain.model.Session
 import com.lobito.eatidentifiervip.domain.model.User
 
 data class LoginState(
-    val user: User = User.EMPTY,
-    val isloading: Boolean = false,
+    val isLoading: Boolean = false,
+    val error: String = "",
+    val data: Session? = null
 )
