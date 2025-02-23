@@ -19,11 +19,11 @@ configurations.all {
 
 
 android {
-    namespace = "com.lobito.appbusesvip"
+    namespace = "com.lobito.eatidentifiervip"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.lobito.appbusesvip"
+        applicationId = "com.lobito.eatidentifiervip"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

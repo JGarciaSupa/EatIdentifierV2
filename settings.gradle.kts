@@ -26,5 +26,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AppBusesVIP"
+rootProject.name = "EatIdentifierVIP"
 include(":app")
