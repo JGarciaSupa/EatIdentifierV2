@@ -28,6 +28,7 @@ work = "2.10.0"
 workKoin = "3.5.3"
 store = "1.1.2"
 jetbrainsKotlinJvm = "2.0.0"
+toasty = "1.5.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -69,6 +70,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 workmanager = {module = "androidx.work:work-runtime-ktx", version.ref = "work" }
 workmanager-koin = {module = "io.insert-koin:koin-androidx-workmanager", version.ref = "workKoin" }
 datastore = {module = "androidx.datastore:datastore-preferences", version.ref = "store"}
+toasty = { module = "com.github.GrenderG:Toasty", version.ref = "toasty" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

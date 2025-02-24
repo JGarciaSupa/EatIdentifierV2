@@ -123,4 +123,7 @@ dependencies {
 
     //Data Store
     implementation(libs.datastore)
+
+    //TOAST PERSONALIZADO
+    implementation(libs.toasty)
 }

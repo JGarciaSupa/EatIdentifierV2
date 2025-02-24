@@ -1,11 +1,11 @@
 package com.lobito.eatidentifiervip.domain.repository
 
-import com.lobito.eatidentifiervip.data.remote.model.RequestTokenDTO
-import com.lobito.eatidentifiervip.data.remote.model.ResponseEmpleadoDTO
-import com.lobito.eatidentifiervip.data.remote.model.ResponseEmpresasDTO
-import com.lobito.eatidentifiervip.data.remote.model.ResponseGenericDTO
-import com.lobito.eatidentifiervip.data.remote.model.ResponseTokenSecurityDTO
+import kotlinx.coroutines.flow.Flow
+import com.lobito.eatidentifiervip.domain.model.Empleado
 
 interface EmpleadoRepository {
-    suspend fun getEmpleadoFromApi(): ResponseGenericDTO<List<ResponseEmpleadoDTO>>
+    suspend fun getEmpleadoFromApi(): List<Empleado>
+    suspend fun findEmpleadoByCui(cui: String): Empleado
+    suspend fun refreshEmpleados(empleados: List<Empleado>)
+    suspend fun getEmpleadoAll(): Flow<List<Empleado>>
 }

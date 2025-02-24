@@ -15,18 +15,27 @@ import com.lobito.eatidentifiervip.di.Qualifiers
 import com.lobito.eatidentifiervip.domain.model.Session
 import com.lobito.eatidentifiervip.domain.model.User
 import com.lobito.eatidentifiervip.domain.usecase.empresas.GetEmpresasUseCase
+import com.lobito.eatidentifiervip.domain.usecase.user.LoginAutomaticUseCase
 import com.lobito.eatidentifiervip.domain.usecase.user.PostLoginUseCase
 import com.lobito.eatidentifiervip.presentation.login.state.EmpresasState
 import com.lobito.eatidentifiervip.presentation.login.state.LoginState
+import com.lobito.eatidentifiervip.presentation.widget.ToastyViewModelHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.core.component.getScopeId
 
 class LoginViewModel(
     private val context : Context,
     private val getEmpresasUseCase: GetEmpresasUseCase,
     private val postLoginUseCase: PostLoginUseCase,
+    private val loginAutomaticUseCase: LoginAutomaticUseCase,
 ) : ViewModel() {
+
+    private val toastyHelper = ToastyViewModelHelper(viewModelScope)
+    val toastMessageError = toastyHelper.toastMessageError
+    val toastMessageSuccess = toastyHelper.toastMessageSuccess
+    val toastMessageInfo = toastyHelper.toastMessageInfo
 
     var stateLogin by mutableStateOf(LoginState())
         private set
@@ -34,8 +43,12 @@ class LoginViewModel(
     var empresaState by mutableStateOf(EmpresasState())
         private set
 
+    var navigate by mutableStateOf(false)
+        private set
+
     init {
         getEmpresas()  // Cargar las empresas al iniciar el ViewModel
+        loginAutomatic()
     }
 
     fun getEmpresas() {
@@ -48,7 +61,15 @@ class LoginViewModel(
                 )
             }
         }
+    }
+
+    fun loginAutomatic() {
+        viewModelScope.launch(Dispatchers.IO) {
+            loginAutomaticUseCase().let { response ->
+                navigate = true
+            }
         }
+    }
 
     fun login(userName: String, password: String, idEmpresa: String) {
         viewModelScope.launch(Dispatchers.IO){
@@ -60,18 +81,13 @@ class LoginViewModel(
            val response = postLoginUseCase(session)
             when(response){
                 is Success -> {
-                    stateLogin = stateLogin.copy(
-                        isLoading = false,
-                        error = "",
-                        data = response.data
-                    )
-                    restartTokenSync()
+                    navigate = true
                 }
                 is Resource.Error -> {
                     stateLogin = stateLogin.copy(
                         isLoading = false,
-                        error = response.message ?: "Ocurrió un error desconocido"
                     )
+                    toastyHelper.triggerToastyError(response.message)
                 }
                 is Resource.Loading -> {
                     stateLogin = stateLogin.copy(

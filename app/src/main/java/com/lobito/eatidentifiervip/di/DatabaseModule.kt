@@ -25,4 +25,5 @@ val dataModule = module {
     //EAT IDENTIFIER VIP
     single { get<AppDatabase>().empresaDao() }
     single { get<AppDatabase>().sessionDao() }
+    single { get<AppDatabase>().empleadoDao() }
 }

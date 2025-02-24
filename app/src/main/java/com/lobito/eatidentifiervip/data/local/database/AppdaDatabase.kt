@@ -15,8 +15,9 @@ import com.lobito.eatidentifiervip.data.local.model.*
         InventoryEntity::class,
         EmpresaEntity::class,
         SessionEntity::class,
+        EmpleadoEntity::class
     ],
-    version = 4,
+    version = 5,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
@@ -24,4 +25,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun inventoryDao(): InventoryDao
     abstract fun empresaDao(): EmpresaDao
     abstract fun sessionDao(): SessionDao
+    abstract fun empleadoDao(): EmpleadoDao
 }

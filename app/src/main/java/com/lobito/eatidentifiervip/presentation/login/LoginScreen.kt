@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.*
 import com.lobito.eatidentifiervip.R
 import com.lobito.eatidentifiervip.domain.model.Empresa
+import com.lobito.eatidentifiervip.presentation.widget.ToastyMessages
 import com.lobito.eatidentifiervip.ui.theme.Black
 import com.lobito.eatidentifiervip.ui.theme.MediumOrange
 import com.lobito.eatidentifiervip.ui.theme.Roboto
@@ -84,6 +85,17 @@ private fun LoginSection(viewModel: LoginViewModel, selectedEmpresa: Empresa?, o
     val uiColor = if (isSystemInDarkTheme()) Color.White else Color.DarkGray
 
     val loginState = viewModel.stateLogin
+    val navigate = viewModel.navigate
+    if(navigate){
+        onNavigate()
+    }
+
+    ToastyMessages(
+        errorMessageFlow = viewModel.toastMessageError,
+        successMessageFlow = viewModel.toastMessageSuccess,
+        infoMessageFlow = viewModel.toastMessageInfo
+    )
+
 
     Spacer(modifier = Modifier.height(16.dp))
 

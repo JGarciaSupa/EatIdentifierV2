@@ -5,11 +5,12 @@ import com.lobito.eatidentifiervip.domain.usecase.user.*
 import com.lobito.eatidentifiervip.domain.usecase.shared.*
 import com.lobito.eatidentifiervip.domain.usecase.dataInit.*
 import com.lobito.eatidentifiervip.domain.usecase.empresas.*
+import com.lobito.eatidentifiervip.domain.usecase.empleados.*
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    factoryOf(::PostLoginUseCase)
+
     factoryOf(::TokenSecurityUseCase)
     factoryOf(::TokenEmployeeUseCase)
     factoryOf(::GetPreferenceUseCase)
@@ -24,4 +25,8 @@ val useCaseModule = module {
 
     //EAT IDENTIFIER
     factoryOf(::GetEmpresasUseCase)
+    factoryOf(::PostLoginUseCase)
+    factoryOf(::LoginAutomaticUseCase)
+    factoryOf(::GetEmpleadosUseCase)
+    factoryOf(::GetEmpleadoByCuiUseCase)
 }

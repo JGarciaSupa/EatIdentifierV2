@@ -26,6 +26,7 @@ val appModule = module {
     singleOf(::EmpresaRepositoryImpl) bind EmpresaRepository::class
     singleOf(::EmpleadoRepositoryImpl) bind EmpleadoRepository::class
 
+
 }
 
 enum class Qualifiers {

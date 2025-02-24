@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.lobito.eatidentifiervip.presentation.home.HomeScreen
 import com.lobito.eatidentifiervip.presentation.login.LoginScreen
 import com.lobito.eatidentifiervip.presentation.splash.SplashScreen
 
@@ -22,6 +23,9 @@ fun NavigationWrapper() {
                 navController.navigate(Home){popUpTo(Login) { inclusive = true }} }
             }
 
+        composable<Home> {
+            HomeScreen() {  }
+        }
 //        composable<Identification> {
 //            IdentificationScreen {
 //                navController.navigate(Splash){
@@ -29,9 +33,7 @@ fun NavigationWrapper() {
 //            }
 //        }
 //
-//        composable<Home> {
-//            HomeScreen { name -> navController.navigate(Detail(name = name)) }
-//        }
+
 //
 //        composable<Detail> { backStackEntry ->
 //            val detail: Detail = backStackEntry.toRoute()
