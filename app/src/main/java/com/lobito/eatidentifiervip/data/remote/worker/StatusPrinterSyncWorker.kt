@@ -6,7 +6,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.lobito.eatidentifiervip.data.repository.SyncRepositoryImpl
 
-class TokenSyncWorker(
+class StatusPrinterSyncWorker(
     context: Context,
     params: WorkerParameters,
     private val syncRepositoryImpl: SyncRepositoryImpl
@@ -15,7 +15,7 @@ class TokenSyncWorker(
     override suspend fun doWork(): Result {
         return try {
             Log.i("TokenSyncWorker", "Sincronizando tokens...")
-            syncRepositoryImpl.syncTokens() // PRIMERO EJECUTAR ESTE MÉTODO
+//            syncRepositoryImpl.syncTokens() // PRIMERO EJECUTAR ESTE MÉTODO
 //            syncRepositoryImpl.getAbsentismoFromApi() // SEGUNDO
 //            syncRepositoryImpl.getInventoryFromApi()
             Result.success()

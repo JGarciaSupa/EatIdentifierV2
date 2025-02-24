@@ -22,6 +22,7 @@ val dataModule = module {
     single { get<AppDatabase>().userDao() }
     single { get<AppDatabase>().absentismoDao() }
     single { get<AppDatabase>().inventoryDao() }
+
     //EAT IDENTIFIER VIP
     single { get<AppDatabase>().empresaDao() }
     single { get<AppDatabase>().sessionDao() }

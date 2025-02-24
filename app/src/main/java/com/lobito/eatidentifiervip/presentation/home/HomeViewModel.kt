@@ -1,19 +1,19 @@
 package com.lobito.eatidentifiervip.presentation.home
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lobito.eatidentifiervip.domain.usecase.empleados.GetEmpleadoByCuiUseCase
 import com.lobito.eatidentifiervip.domain.usecase.empleados.GetEmpleadosUseCase
+import com.lobito.eatidentifiervip.domain.usecase.printer.PrintUseCase
 import com.lobito.eatidentifiervip.presentation.widget.ToastyViewModelHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val context : Context,
     private val getEmpleadosUseCase: GetEmpleadosUseCase,
     private val getEmpleadoByCuiUseCase: GetEmpleadoByCuiUseCase,
+    private val printUseCase: PrintUseCase,
 ) : ViewModel() {
 
     //Widget Toasty
@@ -40,7 +40,7 @@ class HomeViewModel(
 
     fun findClient(dni : String){
         if(dni.isEmpty()){
-            toastyHelper.triggerToastyError("Ingrese un DNI \uD83E\uDDD0")
+            toastyHelper.triggerToastyInfo("Ingrese un DNI \uD83E\uDDD0")
             return
         }
 
@@ -52,7 +52,7 @@ class HomeViewModel(
                     return@launch
                 }
                 if(result.estado != 0){
-                 toastyHelper.triggerToastyInfo("Usuario Bloqueado 😞, Notifique aun Supervisor")
+                 toastyHelper.triggerToastyInfo("Usuario Bloqueado 😞, Notifique al Supervisor")
                     return@launch
                 }
 

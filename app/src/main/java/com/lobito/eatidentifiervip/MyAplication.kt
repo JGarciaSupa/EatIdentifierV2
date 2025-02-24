@@ -27,7 +27,6 @@ class MyApplication : Application(), KoinComponent {
     }
 
     private fun wokerManagerFuncion(context : Context){
-        Log.i("SyncManager", "wokerManagerFuncion")
         SyncManager.scheduleTokenSync(context)
     }
 

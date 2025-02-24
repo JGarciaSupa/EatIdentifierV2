@@ -5,11 +5,18 @@ import org.koin.dsl.module
 import com.lobito.eatidentifiervip.data.remote.service.AppService
 import org.koin.androidx.workmanager.dsl.workerOf
 import com.lobito.eatidentifiervip.data.remote.worker.TokenSyncWorker
+import com.lobito.eatidentifiervip.domain.repository.PrinterRepository
+import com.lobito.eatidentifiervip.data.repository.*
+import org.koin.dsl.bind
 
 val serviceModule = module {
 //    singleOf(::AppbusesService) // Se pasa la referencia del constructor directamen
     singleOf(::AppService)
     workerOf(::TokenSyncWorker)
+
+    ////SERVICIO DE PRINT DE TICKETS////
+//    singleOf(::EmpleadoRepositoryImpl) bind EmpleadoRepository::class
+    singleOf(::PrinterRepositoryImpl) bind PrinterRepository::class
 //    single { PrintQueueManager() }
 //    single<PrinterCommand>(named(Constants.BLUETOOTH)) { PrinterBluetoothCommandHandler(printQueueManager = get(), getPreferenceUseCase = get()) }
 //    single<PrinterCommand>(named(Constants.RED)) { PrinterRedCommandHandler(get()) }

@@ -69,6 +69,6 @@ enum class Qualifiers {
 
 }
 
-//fun provideSharedPreferencesRepository(context: Context): SharedPreferencesRepositoryImpl {
-//    return SharedPreferencesRepositoryImpl(context)
-//}
+enum class PrinterType {
+    BLUETOOTH, NETWORK, USB
+}
