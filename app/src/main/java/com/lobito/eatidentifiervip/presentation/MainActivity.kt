@@ -8,6 +8,7 @@ import com.lobito.eatidentifiervip.ui.theme.AppBusesVIPTheme
 import com.lobito.utilscalera.data.core.navigation.NavigationWrapper
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

@@ -8,6 +8,9 @@ import kotlinx.serialization.Serializable
 object Splash
 
 @Serializable
+object Permisos
+
+@Serializable
 object Login
 
 @Serializable

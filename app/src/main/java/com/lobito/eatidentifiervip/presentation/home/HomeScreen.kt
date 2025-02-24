@@ -4,8 +4,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -40,13 +42,12 @@ fun HomeScreen(
     onNavigate: (String) -> Unit,
 ) {
     val viewModel: HomeViewModel = koinViewModel()
-    ToastyMessages(
-        errorMessageFlow = viewModel.toastMessageError,
-        successMessageFlow = viewModel.toastMessageSuccess,
-        infoMessageFlow = viewModel.toastMessageInfo
-    )
-
-    MainPrinterFaster(viewModel = viewModel)
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        MainPrinterFaster(viewModel)
+    }
 }
 
 @Composable

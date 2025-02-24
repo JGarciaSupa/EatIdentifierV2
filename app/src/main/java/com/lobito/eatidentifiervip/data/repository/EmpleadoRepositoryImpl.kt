@@ -16,12 +16,13 @@ class EmpleadoRepositoryImpl(
 ) : EmpleadoRepository {
 
     override suspend fun getEmpleadoFromApi(): List<Empleado> {
-        return apbusesService.getEmpleado().data!!.map { it.toDomain() }
+        return apbusesService.getEmpleadoFromApi().data?.map { it.toDomain() } ?: emptyList()
     }
 
-    override suspend fun findEmpleadoByCui(cui: String): Empleado {
-        return empleadoDao.getEmpleadoByCui(cui).toDomain()
+    override suspend fun findEmpleadoByCui(cui: String): Empleado? {
+        return empleadoDao.getEmpleadoByCui(cui)?.toDomain()
     }
+
 
     override suspend fun refreshEmpleados(empleados: List<Empleado>) {
         empleadoDao.refreshEmpleados(empleados.map { it.toDatabase() }) // Transacción segura

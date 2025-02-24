@@ -9,6 +9,6 @@ interface UserRepository {
     suspend fun insertSession(session : Session)
     suspend fun updateSession(session : Session)
     suspend fun logoutSession(idUser : String)
-    suspend fun getSessionPending() : Session
+    suspend fun getSessionPending(): Session?
     suspend fun postLoginFromApi(session: RequestSessionDTO): Session
 }

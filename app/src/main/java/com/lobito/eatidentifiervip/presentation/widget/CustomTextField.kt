@@ -15,7 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.lobito.eatidentifiervip.ui.theme.focusedTextFieldText
@@ -32,6 +34,8 @@ fun CustomTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     trailingIcon: (@Composable () -> Unit)? = null
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     TextField(
         value = value,
         onValueChange = onValueChange,
@@ -52,11 +56,13 @@ fun CustomTextField(
         trailingIcon = trailingIcon,
         singleLine = true,
         keyboardOptions = KeyboardOptions.Default.copy(
-            imeAction = ImeAction.Done // Cambié a ImeAction.Done, pero depende de lo que necesites
+            keyboardType = KeyboardType.Number, // Asegura que el teclado sea numérico
+            imeAction = ImeAction.Done
         ),
         keyboardActions = KeyboardActions(
             onDone = {
-                actionTextField()  // Ejecutar la función pasada como parámetro
+                keyboardController?.hide()  // Oculta el teclado manualmente
+                actionTextField()  // Ejecuta la función
             }
         )
     )

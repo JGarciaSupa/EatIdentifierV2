@@ -1,5 +1,9 @@
 package com.lobito.eatidentifiervip.presentation.login
 
+import android.content.Context
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -32,6 +36,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import com.airbnb.lottie.compose.*
 import com.lobito.eatidentifiervip.R
 import com.lobito.eatidentifiervip.domain.model.Empresa
@@ -49,7 +54,9 @@ fun LoginScreen(
     onNavigate: () -> Unit
 ) {
     val viewModel: LoginViewModel = koinViewModel()
+    val context = LocalContext.current
 
+    permissions(context)
     Surface {
         Column(modifier = Modifier
             .fillMaxSize()
@@ -60,6 +67,41 @@ fun LoginScreen(
         }
     }
 }
+
+@Composable
+fun permissions(context : Context) {
+
+    // Determina el permiso de Bluetooth según la versión de Android
+    val bluetoothPermission =  android.Manifest.permission.BLUETOOTH
+
+    // Crea un launcher para solicitar permisos
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = { isGranted ->
+            if (isGranted) {
+//                Toast.makeText(context, "Permiso de Bluetooth concedido", Toast.LENGTH_SHORT).show()
+                // Continúa con la operación que requiere el permiso
+            } else {
+//                Toast.makeText(context, "Permiso de Bluetooth denegado", Toast.LENGTH_SHORT).show()
+                // Opcional: puedes volver a solicitar el permiso o notificar al usuario
+            }
+        }
+    )
+
+    // Verifica si el permiso ya ha sido concedido
+    LaunchedEffect(Unit) {
+        val permissionCheck = ContextCompat.checkSelfPermission(context, bluetoothPermission)
+        if (permissionCheck == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            // El permiso ya ha sido concedido, continúa con la operación
+//            Toast.makeText(context, "Permiso de Bluetooth ya concedido", Toast.LENGTH_SHORT).show()
+        } else {
+            // El permiso no ha sido concedido, vuelve a solicitarlo
+            permissionLauncher.launch(bluetoothPermission)
+        }
+    }
+
+}
+
 
 @Composable
 private fun LoginContent(viewModel: LoginViewModel, onNavigate: () -> Unit) {
@@ -86,9 +128,14 @@ private fun LoginSection(viewModel: LoginViewModel, selectedEmpresa: Empresa?, o
 
     val loginState = viewModel.stateLogin
     val navigate = viewModel.navigate
-    if(navigate){
-        onNavigate()
+
+    LaunchedEffect(viewModel.navigate) {
+        if (navigate) {
+            onNavigate()
+        }
     }
+
+
 
     ToastyMessages(
         errorMessageFlow = viewModel.toastMessageError,

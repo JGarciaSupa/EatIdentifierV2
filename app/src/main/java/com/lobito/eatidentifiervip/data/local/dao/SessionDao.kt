@@ -9,7 +9,7 @@ import com.lobito.eatidentifiervip.data.local.model.UserEntity
 interface SessionDao : BaseDao<SessionEntity> {
 
     @Query("SELECT * FROM SessionEntity WHERE state = ${SessionEntity.OPEN}")
-    suspend fun getSessionOpen(): SessionEntity
+    suspend fun getSessionOpen(): SessionEntity?
 
     @Query("UPDATE SessionEntity SET state = ${SessionEntity.TRUNK} WHERE state = 0")
     suspend fun trunkUsersPending()

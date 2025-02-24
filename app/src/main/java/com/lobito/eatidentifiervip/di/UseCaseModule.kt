@@ -26,9 +26,14 @@ val useCaseModule = module {
 
     //EAT IDENTIFIER
     factoryOf(::GetEmpresasUseCase)
+    factoryOf(::GetEmpresasFromApiUseCase)
     factoryOf(::PostLoginUseCase)
     factoryOf(::LoginAutomaticUseCase)
-    factoryOf(::GetEmpleadosUseCase)
+    factoryOf(::GetEmpleadosFromDBUseCase)
+    factoryOf(::GetEmpleadosFromApiUseCase)
     factoryOf(::GetEmpleadoByCuiUseCase)
+    factoryOf(::InsertEmpleadoUseCase)
+    factoryOf(::InsertEmpresasUseCase)
+
     factoryOf(::PrintUseCase)
 }

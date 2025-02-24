@@ -14,27 +14,28 @@ fun NavigationWrapper() {
     NavHost(navController = navController, startDestination = Splash) {
         composable<Splash> {
             SplashScreen {
-                navController.navigate(Login){popUpTo(Login) { inclusive = true }} }
-        }
+                navController.navigate(Login){popUpTo(Login) { inclusive = true }}
+            }
+          }
+
 
         composable<Login> {
             LoginScreen()
             {
-                navController.navigate(Home){popUpTo(Login) { inclusive = true }} }
+                navController.navigate(Home){popUpTo(Home) { inclusive = true }} }
             }
 
         composable<Home> {
-            HomeScreen() {  }
-        }
+            HomeScreen() {
+//                navController.navigate(Home){popUpTo(Home) { inclusive = true }} }
+            }
+         }
 //        composable<Identification> {
 //            IdentificationScreen {
 //                navController.navigate(Splash){
 //                popUpTo(Splash) { inclusive = true }}
 //            }
 //        }
-//
-
-//
 //        composable<Detail> { backStackEntry ->
 //            val detail: Detail = backStackEntry.toRoute()
 //            DetailScreen(name = detail.name,

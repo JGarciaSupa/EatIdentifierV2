@@ -6,16 +6,19 @@ import com.lobito.eatidentifiervip.data.remote.model.RequestSessionDTO
 import com.lobito.eatidentifiervip.domain.model.Session
 import com.lobito.eatidentifiervip.domain.repository.UserRepository
 
-class LoginAutomaticUseCase  (
+class LoginAutomaticUseCase(
     private val repository: UserRepository
 ) {
     suspend operator fun invoke(): Resource<Session> {
-        try {
+        return try {
             val response = repository.getSessionPending()
-            return Resource.Success(response)
-        }catch (e: Exception){
-            return Resource.Error(e.toString())
+            if (response == null) {
+                Resource.Error("No pending session found")
+            } else {
+                Resource.Success(response)
+            }
+        } catch (e: Exception) {
+            Resource.Error("Failed to get pending session: ${e.message}")
         }
     }
 }
-

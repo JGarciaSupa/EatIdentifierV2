@@ -126,4 +126,8 @@ dependencies {
 
     //TOAST PERSONALIZADO
     implementation(libs.toasty)
+
+    //PERMISOS JETPACK COMPOSE
+//    implementation(libs.permissions)
+
 }

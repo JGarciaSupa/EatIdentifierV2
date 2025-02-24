@@ -1,7 +1,11 @@
 package com.lobito.eatidentifiervip
 
+import android.annotation.SuppressLint
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import com.lobito.eatidentifiervip.data.remote.worker.SyncManager
 import com.lobito.eatidentifiervip.di.*
@@ -19,15 +23,29 @@ class MyApplication : Application(), KoinComponent {
         startKoin {
             androidLogger()
             androidContext(this@MyApplication)
-            workManagerFactory()
+//            workManagerFactory()
             modules(networkModule,appModule, dataModule,viewModule,serviceModule,useCaseModule )
         }
 
-        wokerManagerFuncion(this)
+//        wokerManagerFuncion(this)
+        notification()
     }
 
-    private fun wokerManagerFuncion(context : Context){
-        SyncManager.scheduleTokenSync(context)
+//    private fun wokerManagerFuncion(context : Context){
+//        SyncManager.scheduleTokenSync(context)
+//    }
+
+    @SuppressLint("SuspiciousIndentation")
+    private fun notification(){
+     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                 "running_channel",
+                 "Runnin Notifications",
+                    NotificationManager.IMPORTANCE_HIGH
+            )
+         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
     override fun onTerminate() {

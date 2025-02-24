@@ -45,7 +45,7 @@ class AppService(
         }
     }
 
-    suspend fun getEmpleado(): ResponseGenericDTO<List<ResponseEmpleadoDTO>> {
+    suspend fun getEmpleadoFromApi(): ResponseGenericDTO<List<ResponseEmpleadoDTO>> {
         return withContext(Dispatchers.IO){
             val response = eatIdentifierApi.getEmpleado()
             response.body() ?: ResponseGenericDTO(data = emptyList())

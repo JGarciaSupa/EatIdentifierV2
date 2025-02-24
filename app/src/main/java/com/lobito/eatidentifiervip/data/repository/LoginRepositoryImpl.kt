@@ -29,9 +29,8 @@ class LoginRepositoryImpl(
         sessionDao.logoutSession(idUser)
     }
 
-    override suspend fun getSessionPending(): Session {
-        return sessionDao.getSessionOpen().toDomain()
-
+    override suspend fun getSessionPending(): Session? {
+        return sessionDao.getSessionOpen()?.toDomain()
     }
 
     override suspend fun postLoginFromApi(requestSessionDTO: RequestSessionDTO): Session {
