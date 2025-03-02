@@ -11,9 +11,9 @@ import androidx.work.WorkManager
 import com.lobito.eatidentifiervip.data.common.Resource
 import com.lobito.eatidentifiervip.data.common.Resource.Success
 import com.lobito.eatidentifiervip.data.remote.worker.SyncManager
+import com.lobito.eatidentifiervip.data.service.ForegroundServiceHelper
 import com.lobito.eatidentifiervip.di.Qualifiers
 import com.lobito.eatidentifiervip.domain.model.Session
-import com.lobito.eatidentifiervip.domain.model.User
 import com.lobito.eatidentifiervip.domain.usecase.empresas.GetEmpresasFromApiUseCase
 import com.lobito.eatidentifiervip.domain.usecase.empresas.GetEmpresasUseCase
 import com.lobito.eatidentifiervip.domain.usecase.empresas.InsertEmpresasUseCase
@@ -95,6 +95,7 @@ class LoginViewModel(
     }
 
     fun login(userName: String, password: String, idEmpresa: String) {
+        ForegroundServiceHelper.startService(context)
         if(userName.isEmpty() || password.isEmpty() || idEmpresa.isEmpty()){
             toastyHelper.triggerToastyInfo("Ingrese todos los campos")
             return
@@ -109,6 +110,7 @@ class LoginViewModel(
             val response = postLoginUseCase(session)
             when (response) {
                 is Success -> {
+                    rebootForeground()
                     navigate = true
                 }
 
@@ -134,16 +136,14 @@ class LoginViewModel(
             val response = loginAutomaticUseCase()
             when (response) {
                 is Resource.Success -> {
+                    rebootForeground()
                     navigate = true
                 }
-
                 is Resource.Error -> {
                     stateLogin = stateLogin.copy(
                         isLoading = false,
                     )
-//                        toastyHelper.triggerToastyError(response.message)
                 }
-
                 is Resource.Loading -> {
                     stateLogin = stateLogin.copy(
                         isLoading = true,
@@ -152,6 +152,14 @@ class LoginViewModel(
                 }
 
             }
+        }
+    }
+
+    suspend fun rebootForeground(){
+        viewModelScope.launch(Dispatchers.IO) {
+            ForegroundServiceHelper.stopService(context)
+            delay(500)
+            ForegroundServiceHelper.startService(context)
         }
     }
 }

@@ -10,19 +10,13 @@ import com.lobito.eatidentifiervip.data.local.model.*
 @TypeConverters(TimeConverter::class)
 @Database(
     entities = [
-        UserEntity::class,
-        AbsentismoEntity::class,
-        InventoryEntity::class,
         EmpresaEntity::class,
         SessionEntity::class,
         EmpleadoEntity::class
     ],
-    version = 5,
+    version = 6,
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun userDao(): UserDao
-    abstract fun absentismoDao(): AbsentismoDao
-    abstract fun inventoryDao(): InventoryDao
     abstract fun empresaDao(): EmpresaDao
     abstract fun sessionDao(): SessionDao
     abstract fun empleadoDao(): EmpleadoDao

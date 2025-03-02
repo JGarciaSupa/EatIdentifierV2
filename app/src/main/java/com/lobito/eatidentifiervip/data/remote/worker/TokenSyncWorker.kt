@@ -15,9 +15,6 @@ class TokenSyncWorker(
     override suspend fun doWork(): Result {
         return try {
             Log.i("TokenSyncWorker", "Sincronizando tokens...")
-            syncRepositoryImpl.syncTokens() // PRIMERO EJECUTAR ESTE MÉTODO
-//            syncRepositoryImpl.getAbsentismoFromApi() // SEGUNDO
-//            syncRepositoryImpl.getInventoryFromApi()
             Result.success()
         } catch (e: Exception) {
             Log.e("TokenSyncWorker", "Error en la sincronización", e)

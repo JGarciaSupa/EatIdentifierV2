@@ -128,6 +128,6 @@ dependencies {
     implementation(libs.toasty)
 
     //PERMISOS JETPACK COMPOSE
-//    implementation(libs.permissions)
+    implementation(libs.permissions)
 
 }

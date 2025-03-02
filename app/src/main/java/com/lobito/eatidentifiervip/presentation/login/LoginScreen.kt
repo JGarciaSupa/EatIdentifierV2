@@ -1,6 +1,7 @@
 package com.lobito.eatidentifiervip.presentation.login
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -47,6 +48,8 @@ import com.lobito.eatidentifiervip.ui.theme.Roboto
 import com.lobito.eatidentifiervip.ui.theme.focusedTextFieldText
 import com.lobito.eatidentifiervip.ui.theme.textFieldContainer
 import com.lobito.eatidentifiervip.ui.theme.unfocusedTextFieldText
+import com.msharialsayari.requestpermissionlib.component.RequestPermissions
+import com.msharialsayari.requestpermissionlib.model.DialogParams
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -54,9 +57,8 @@ fun LoginScreen(
     onNavigate: () -> Unit
 ) {
     val viewModel: LoginViewModel = koinViewModel()
-    val context = LocalContext.current
 
-    permissions(context)
+    permissions()
     Surface {
         Column(modifier = Modifier
             .fillMaxSize()
@@ -69,38 +71,28 @@ fun LoginScreen(
 }
 
 @Composable
-fun permissions(context : Context) {
+fun permissions() {
+    RequestPermissions(
+        permissions = listOf(android.Manifest.permission.POST_NOTIFICATIONS,android.Manifest.permission.BLUETOOTH),
+        rationalDialogParams = DialogParams(
+            title = R.string.NotificationAndBlueToothTitle,
+            message = R.string.NotificationAndBlueToothBody,
+            icon = R.drawable.baseline_24,
+        ),
+        deniedDialogParams = DialogParams(
+            title = R.string.NotificationAndBlueToothTitleDenied,
+            message = R.string.NotificationAndBlueToothBodyDenied,
+            positiveButtonText = R.string.Settings,
+        ),
+        isGranted = {
 
-    // Determina el permiso de Bluetooth según la versión de Android
-    val bluetoothPermission =  android.Manifest.permission.BLUETOOTH
+        },
+        onDone = {
 
-    // Crea un launcher para solicitar permisos
-    val permissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-        onResult = { isGranted ->
-            if (isGranted) {
-//                Toast.makeText(context, "Permiso de Bluetooth concedido", Toast.LENGTH_SHORT).show()
-                // Continúa con la operación que requiere el permiso
-            } else {
-//                Toast.makeText(context, "Permiso de Bluetooth denegado", Toast.LENGTH_SHORT).show()
-                // Opcional: puedes volver a solicitar el permiso o notificar al usuario
-            }
         }
     )
-
-    // Verifica si el permiso ya ha sido concedido
-    LaunchedEffect(Unit) {
-        val permissionCheck = ContextCompat.checkSelfPermission(context, bluetoothPermission)
-        if (permissionCheck == android.content.pm.PackageManager.PERMISSION_GRANTED) {
-            // El permiso ya ha sido concedido, continúa con la operación
-//            Toast.makeText(context, "Permiso de Bluetooth ya concedido", Toast.LENGTH_SHORT).show()
-        } else {
-            // El permiso no ha sido concedido, vuelve a solicitarlo
-            permissionLauncher.launch(bluetoothPermission)
-        }
-    }
-
 }
+
 
 
 @Composable

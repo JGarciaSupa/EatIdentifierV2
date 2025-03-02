@@ -1,12 +1,10 @@
 package com.lobito.eatidentifiervip.data.remote.apis
 
 import com.lobito.eatidentifiervip.data.remote.model.RequestSessionDTO
-import com.lobito.eatidentifiervip.data.remote.model.RequestTokenDTO
 import com.lobito.eatidentifiervip.data.remote.model.ResponseEmpleadoDTO
 import com.lobito.eatidentifiervip.data.remote.model.ResponseEmpresasDTO
 import com.lobito.eatidentifiervip.data.remote.model.ResponseGenericDTO
 import com.lobito.eatidentifiervip.data.remote.model.ResponseMenuDTO
-import com.lobito.eatidentifiervip.data.remote.model.ResponsePersonalAbsentismoDTO
 import com.lobito.eatidentifiervip.data.remote.model.ResponseSessionDTO
 import retrofit2.Response
 import retrofit2.http.Body

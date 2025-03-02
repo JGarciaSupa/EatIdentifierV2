@@ -3,4 +3,10 @@
     <string name="app_logo">App Logo</string>
     <string name="App_Comedores">ERP Comedores</string>
     <string name="Iniciar_Sesion">Iniciar Sesión</string>
+    <string name="NotificationAndBlueToothTitle">Solicitud de Permisos Multiple</string>
+    <string name="NotificationAndBlueToothBody">Se requiere permisos para Syncronizar Data e Imprimir</string>
+    <string name="NotificationAndBlueToothTitleDenied">Es Requerido Los Permisos Multiple</string>
+    <string name="NotificationAndBlueToothBodyDenied">Se requiere permisos para Syncronizar e Imprimir</string>
+    <string name="Settings">Settings</string>
+
 </resources>

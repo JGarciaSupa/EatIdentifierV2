@@ -26,8 +26,6 @@ class MyApplication : Application(), KoinComponent {
 //            workManagerFactory()
             modules(networkModule,appModule, dataModule,viewModule,serviceModule,useCaseModule )
         }
-
-//        wokerManagerFuncion(this)
         notification()
     }
 
@@ -39,7 +37,7 @@ class MyApplication : Application(), KoinComponent {
     private fun notification(){
      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                 "running_channel",
+                 "ForegroundService",
                  "Runnin Notifications",
                     NotificationManager.IMPORTANCE_HIGH
             )

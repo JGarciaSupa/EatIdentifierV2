@@ -14,11 +14,10 @@ import org.koin.dsl.module
 val appModule = module {
     single(named(Qualifiers.privateKey)) { "private_key" }
     single(named(Qualifiers.publicKey)) { "public_key" }
-    singleOf(::DataStoreRepositoryImpl) bind PreferencesRepository::class
+    singleOf(::DataStoreRepositoryImpl) bind PreferencesRepository::class // DATA STORE
+
     singleOf(::LoginRepositoryImpl) bind UserRepository::class
-    singleOf(::TokenRepositoryImpl) bind TokenRepository::class
-    singleOf(::AbsentismoRepositoryImpl) bind AbsentismoRepository::class
-    singleOf(::InventoryRepositoryImpl) bind InventoryRepository::class
+
     singleOf(::IdentificadorRepositoryImpl) bind IdentificadorRepository::class
     singleOf(::SyncRepositoryImpl)
 
@@ -35,36 +34,13 @@ enum class Qualifiers {
     okHttpEatIdentifier,
     retrofitEatIdentifier,
     interceptorEatIdentifier,
-
     privateKey,
     publicKey,
-    devBaseApiSecurityURL,
-    prdBaseApiSecurityURL,
-    devApiBusesURL,
-    prdApiBusesURL,
-    prdEmployeeURL,
-    prdInventoryURL,
     prdDniURL,
-    retrofitApiSecurity,
-    retrofitApiBuses,
-    retrofitEmployee,
-    retrofitInventory,
     retrofitDNI,
     tokenSyncWorker,
     myDataStore,
-    tokenBuses,
-    tokenSecurity,
-    tokenEmployee,
-    tokenInventory,
-    interceptorBuses,
-    interceptorEmployee,
-    interceptorSecurity,
-    interceptorInventory,
     interceptorDNI,
-    okHttpSecurity,
-    okHttpBuses,
-    okHttpEmployee,
-    okHttpInventory,
     okHttpDNI,
 
 }

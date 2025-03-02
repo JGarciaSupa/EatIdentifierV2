@@ -5,7 +5,6 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.lobito.eatidentifiervip.data.local.model.EmpleadoEntity
 import com.lobito.eatidentifiervip.data.local.model.SessionEntity
-import com.lobito.eatidentifiervip.data.local.model.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
