@@ -4,6 +4,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lobito.eatidentifiervip.data.common.Resource
+import com.lobito.eatidentifiervip.di.PrinterType
+import com.lobito.eatidentifiervip.di.Qualifiers
+import com.lobito.eatidentifiervip.domain.model.Empleado
+import com.lobito.eatidentifiervip.domain.model.PrintData
 import com.lobito.eatidentifiervip.domain.usecase.empleados.GetEmpleadoByCuiUseCase
 import com.lobito.eatidentifiervip.domain.usecase.empleados.GetEmpleadosFromApiUseCase
 import com.lobito.eatidentifiervip.domain.usecase.empleados.GetEmpleadosFromDBUseCase
@@ -12,6 +16,9 @@ import com.lobito.eatidentifiervip.domain.usecase.printer.PrintUseCase
 import com.lobito.eatidentifiervip.presentation.widget.ToastyViewModelHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class HomeViewModel(
     private val getEmpleadosFromDBUseCase: GetEmpleadosFromDBUseCase,
@@ -48,7 +55,42 @@ class HomeViewModel(
         }
     }
 
+    fun ticketEmpleado(empleado: Empleado): String {
+        val currentTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
 
+        return """
+        -----------------------------
+              ACCESO AUTORIZADO      
+        -----------------------------
+        DNI: ${empleado.cui}  
+        Hora: $currentTime  
+        Nombre: ${empleado.nombre}  
+        Posición: ${empleado.cargo}  
+        ----------------------------- 
+    """.trimIndent()
+    }
+
+    fun ticketTest(): String {
+        val currentTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+
+        return """
+        -----------------------------
+              ACCESO AUTORIZADO      
+        -----------------------------
+        DNI: 12345678  
+        Hora: $currentTime  
+        Nombre: Juan Perez  
+        Posición: Supervisor  
+        ----------------------------- 
+    """.trimIndent()
+    }
+
+    fun imprimir(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val printData = PrintData(text = ticketTest(), dni = "12345678")
+            printUseCase(printData, PrinterType.BLUETOOTH)
+        }
+    }
 
     fun findClient(dni : String){
         if(dni.isEmpty()){
@@ -67,7 +109,19 @@ class HomeViewModel(
                  toastyHelper.triggerToastyInfo("Usuario Bloqueado 😞, Notifique al Supervisor")
                     return@launch
                 }
-               toastyHelper.triggerToastyInfo("Usuario encontrado 😊")
+                /***
+                 * REALIZAR VALIDACION DE TIEMPO SI DEBE IMPRIMIR DESAYUNO O ALMUERZO O CENA
+                 * AHORA SI VUELVE A IMPRIMIR UN HORARIO DE RANGO 6:00 AM A 10:00 AM SOLO ES DESAYUNO Y SOLO 1 VEZ
+                 * SI VUELVE EL SISTEMA INDICARA MOSTRARA UN ALERT QUE YA FUE IMPRIMIDO SU TICKET
+                 * SUCESIVAMENTE PARA ALMUERZO Y CENA
+                 * NO DIRA ACCESO AUTORIZADO, DEBERA DECIR SI ES DESAYUNO, ALMUERZO O CENA
+                 *
+                 * TODO : ESTA PENDIENTE HACER AUTOMATICO LA LECTURA Y EJECUTAR LA LOGICA DE IMPRESION
+                 */
+
+                val ticketArmado = ticketEmpleado(result)
+                val printData = PrintData(text = ticketArmado, dni = "12345678")
+                printUseCase(printData, PrinterType.BLUETOOTH)
 
             } catch (e: Exception) {
                 toastyHelper.triggerToastyError(e.toString())

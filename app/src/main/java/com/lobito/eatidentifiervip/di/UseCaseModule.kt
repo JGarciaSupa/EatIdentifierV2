@@ -7,6 +7,8 @@ import com.lobito.eatidentifiervip.domain.usecase.dataInit.*
 import com.lobito.eatidentifiervip.domain.usecase.empresas.*
 import com.lobito.eatidentifiervip.domain.usecase.empleados.*
 import com.lobito.eatidentifiervip.domain.usecase.printer.*
+import com.lobito.eatidentifiervip.domain.usecase.confGlobal.*
+import com.lobito.eatidentifiervip.domain.usecase.confLocal.*
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -26,6 +28,8 @@ val useCaseModule = module {
     factoryOf(::GetEmpleadoByCuiUseCase)
     factoryOf(::InsertEmpleadoUseCase)
     factoryOf(::InsertEmpresasUseCase)
+    factoryOf(::ConfiguracionLocalUseCase)
+    factoryOf(::ConfiguracionGlobalUseCase)
 
     factoryOf(::PrintUseCase)
 }

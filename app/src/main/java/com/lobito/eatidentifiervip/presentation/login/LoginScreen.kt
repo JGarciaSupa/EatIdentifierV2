@@ -73,7 +73,7 @@ fun LoginScreen(
 @Composable
 fun permissions() {
     RequestPermissions(
-        permissions = listOf(android.Manifest.permission.POST_NOTIFICATIONS,android.Manifest.permission.BLUETOOTH),
+        permissions = listOf(android.Manifest.permission.POST_NOTIFICATIONS,android.Manifest.permission.BLUETOOTH_CONNECT),
         rationalDialogParams = DialogParams(
             title = R.string.NotificationAndBlueToothTitle,
             message = R.string.NotificationAndBlueToothBody,

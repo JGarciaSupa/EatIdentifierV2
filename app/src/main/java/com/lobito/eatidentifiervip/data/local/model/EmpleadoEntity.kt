@@ -16,7 +16,7 @@ data class EmpleadoEntity(
     @ColumnInfo(name = "id") val id: Int = 0,
     @ColumnInfo(name = "createDate") val createDate: Date = Date(),
     @ColumnInfo(name = "idEmpleado") val idEmpleado: String,
-    @ColumnInfo(name = "nombres") val nombres: String,
+    @ColumnInfo(name = "nombre") val nombre: String,
     @ColumnInfo(name = "apellidos") val apellidos: String,
     @ColumnInfo(name = "fechaNacimiento") val fechaNacimiento: String,
     @ColumnInfo(name = "cui") val cui: String,
@@ -26,7 +26,8 @@ data class EmpleadoEntity(
     @ColumnInfo(name = "estado") val estado: Int,
     @ColumnInfo(name = "idEmpresa") val idEmpresa: String,
     @ColumnInfo(name = "idConcesionaria") val idConcesionaria: String,
-    @ColumnInfo(name = "idRole") val idRole: String
+    @ColumnInfo(name = "idRole") val idRole: String,
+    @ColumnInfo(name = "cargo") val cargo: String,
 ){
     companion object {
         const val TABLE_NAME = "EmpleadoEntity"
@@ -35,7 +36,7 @@ data class EmpleadoEntity(
 
 fun Empleado.toDatabase() = EmpleadoEntity(
     idEmpleado = idEmpleado,
-    nombres = nombres,
+    nombre = nombre,
     apellidos = apellidos,
     fechaNacimiento = fechaNacimiento,
     cui = cui,
@@ -45,5 +46,6 @@ fun Empleado.toDatabase() = EmpleadoEntity(
     estado = estado,
     idEmpresa = idEmpresa,
     idConcesionaria = idConcesionaria,
-    idRole = idRole
+    idRole = idRole,
+    cargo = cargo,
 )

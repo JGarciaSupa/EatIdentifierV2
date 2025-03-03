@@ -22,4 +22,7 @@ val dataModule = module {
     single { get<AppDatabase>().empresaDao() }
     single { get<AppDatabase>().sessionDao() }
     single { get<AppDatabase>().empleadoDao() }
+    single { get<AppDatabase>().configuracionLocalDao() }
+    single { get<AppDatabase>().configuracionGlobalDao() }
+
 }

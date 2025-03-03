@@ -1,7 +1,11 @@
 package com.lobito.eatidentifiervip.data.repository
 
-class SyncRepositoryImpl(
+import com.lobito.eatidentifiervip.domain.usecase.shared.GetPreferenceUseCase
+import com.lobito.eatidentifiervip.domain.usecase.shared.SetPreferenceUseCase
 
+class SyncRepositoryImpl(
+    private val getDataStoreRepositoryImpl: SetPreferenceUseCase,
+    private val setDataStoreRepositoryImpl: GetPreferenceUseCase,
 ) {
 
 

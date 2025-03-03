@@ -14,16 +14,15 @@ import org.koin.dsl.module
 val appModule = module {
     single(named(Qualifiers.privateKey)) { "private_key" }
     single(named(Qualifiers.publicKey)) { "public_key" }
+
     singleOf(::DataStoreRepositoryImpl) bind PreferencesRepository::class // DATA STORE
-
     singleOf(::LoginRepositoryImpl) bind UserRepository::class
-
     singleOf(::IdentificadorRepositoryImpl) bind IdentificadorRepository::class
     singleOf(::SyncRepositoryImpl)
-
-    // EAT IDENTIFIER
     singleOf(::EmpresaRepositoryImpl) bind EmpresaRepository::class
     singleOf(::EmpleadoRepositoryImpl) bind EmpleadoRepository::class
+    singleOf(::ConfiguracionGlobalRepositoryImpl) bind ConfiguracionGlobalRepository::class
+    singleOf(::ConfiguracionLocalRepositoryImpl) bind ConfiguracionLocalRepository::class
 
 
 }

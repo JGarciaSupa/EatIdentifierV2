@@ -5,7 +5,7 @@ import com.lobito.eatidentifiervip.data.remote.model.ResponseEmpleadoDTO
 
 data class Empleado(
     val idEmpleado: String,
-    val nombres: String,
+    val nombre: String,
     val apellidos: String,
     val fechaNacimiento: String,
     val cui: String,
@@ -15,13 +15,14 @@ data class Empleado(
     val estado: Int,
     val idEmpresa: String,
     val idConcesionaria: String,
-    val idRole: String
+    val idRole: String,
+    val cargo : String,
 )
 
 
 fun ResponseEmpleadoDTO.toDomain() = Empleado(
     idEmpleado = idEmpleado,
-    nombres = nombres,
+    nombre = nombre,
     apellidos = apellidos,
     fechaNacimiento = fechaNacimiento,
     cui = cui,
@@ -31,12 +32,13 @@ fun ResponseEmpleadoDTO.toDomain() = Empleado(
     estado = estado,
     idEmpresa = idEmpresa,
     idConcesionaria = idConcesionaria,
-    idRole = idRole
+    idRole = idRole,
+    cargo = cargo
 )
 
 fun EmpleadoEntity.toDomain() = Empleado(
     idEmpleado = idEmpleado,
-    nombres = nombres,
+    nombre = nombre,
     apellidos = apellidos,
     fechaNacimiento = fechaNacimiento,
     cui = cui,
@@ -46,6 +48,7 @@ fun EmpleadoEntity.toDomain() = Empleado(
     estado = estado,
     idEmpresa = idEmpresa,
     idConcesionaria = idConcesionaria,
-    idRole = idRole
+    idRole = idRole,
+    cargo = cargo,
 )
 

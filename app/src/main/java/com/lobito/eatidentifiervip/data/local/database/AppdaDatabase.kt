@@ -12,12 +12,16 @@ import com.lobito.eatidentifiervip.data.local.model.*
     entities = [
         EmpresaEntity::class,
         SessionEntity::class,
-        EmpleadoEntity::class
+        EmpleadoEntity::class,
+        ConfiguracionLocalEntity::class,
+        ConfiguracionGlobalEntity::class,
     ],
-    version = 6,
+    version = 7,
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun empresaDao(): EmpresaDao
     abstract fun sessionDao(): SessionDao
     abstract fun empleadoDao(): EmpleadoDao
+    abstract fun configuracionLocalDao(): ConfiguracionLocalDao
+    abstract fun configuracionGlobalDao(): ConfiguracionGlobalDao
 }

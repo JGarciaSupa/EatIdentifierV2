@@ -6,7 +6,7 @@ data class ResponseEmpleadoDTO(
     @SerializedName("Empleado_ID")
     val idEmpleado: String,
     @SerializedName("Nombres")
-    val nombres: String,
+    val nombre: String,
     @SerializedName("Apellidos")
     val apellidos: String,
     @SerializedName("Fecha_Nacimiento")
@@ -26,5 +26,7 @@ data class ResponseEmpleadoDTO(
     @SerializedName("Concesionaria_ID")
     val idConcesionaria: String,
     @SerializedName("Role_ID")
-    val idRole: String
+    val idRole: String,
+    @SerializedName("Cargo")
+    val cargo: String
 )
