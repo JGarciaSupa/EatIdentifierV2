@@ -9,7 +9,6 @@ data class Session(
     val idEmpresa: String,
     val idUsuario: String? = "",
     val nameUser: String? = "",
-    val tokenJwt: String? = "",
     val state : Int? = 0,
 )
 
@@ -19,7 +18,6 @@ fun ResponseSessionDTO.toDomain(email: String, password: String, idEmpresa: Stri
     idEmpresa = idEmpresa,
     idUsuario = idUsuario,
     nameUser = nameUser,
-    tokenJwt = tokenJwt,
 )
 
 
@@ -29,5 +27,4 @@ fun SessionEntity.toDomain() = Session(
     idEmpresa = idEmpresa,
     idUsuario = idUsuario,
     nameUser = nameUser,
-    tokenJwt = tokenJwt,
 )

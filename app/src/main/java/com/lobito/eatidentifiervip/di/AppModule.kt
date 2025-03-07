@@ -5,7 +5,7 @@ import com.lobito.eatidentifiervip.data.repository.DataStoreRepositoryImpl
 import com.lobito.eatidentifiervip.domain.repository.PreferencesRepository
 import com.lobito.eatidentifiervip.data.repository.*
 import com.lobito.eatidentifiervip.domain.repository.*
-
+import com.lobito.eatidentifiervip.data.local.tickets.*
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
@@ -23,7 +23,10 @@ val appModule = module {
     singleOf(::EmpleadoRepositoryImpl) bind EmpleadoRepository::class
     singleOf(::ConfiguracionGlobalRepositoryImpl) bind ConfiguracionGlobalRepository::class
     singleOf(::ConfiguracionLocalRepositoryImpl) bind ConfiguracionLocalRepository::class
+    singleOf(::TicketFormatterRepositoryImpl) bind TicketFormatterRepository::class
+    singleOf(::HistorictoImpresionRepositoryImpl) bind HistoricoImpresionRepository::class
 
+    singleOf(::TicketFormmaterLocal)
 
 }
 

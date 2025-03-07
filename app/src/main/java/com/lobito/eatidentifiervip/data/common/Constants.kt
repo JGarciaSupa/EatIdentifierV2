@@ -57,6 +57,14 @@ object Constants {
         //return Base64.getDecoder().decode(base64String)
     }
 
+    fun feedPaperEpson(n: Int): List<Byte> {
+        val bytes = mutableListOf<Byte>()
+        if (n > 0) {
+            val newLines = "\n".repeat(n)  // Repite el carácter de nueva línea 'n' veces
+            bytes.addAll(newLines.toByteArray().toList())  // Convierte a bytes y agrégalo a la lista
+        }
+        return bytes
+    }
 
     fun prepareBitmapForPrinting(bitmap: Bitmap, printerWidthMm: Int = 80): Bitmap {
         // Convertir mm a pixels (asumiendo una densidad de 8 dots/mm para impresoras térmicas)

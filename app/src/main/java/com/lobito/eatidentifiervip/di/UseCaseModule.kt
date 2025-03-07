@@ -9,6 +9,8 @@ import com.lobito.eatidentifiervip.domain.usecase.empleados.*
 import com.lobito.eatidentifiervip.domain.usecase.printer.*
 import com.lobito.eatidentifiervip.domain.usecase.confGlobal.*
 import com.lobito.eatidentifiervip.domain.usecase.confLocal.*
+import com.lobito.eatidentifiervip.domain.usecase.ticket.*
+import com.lobito.eatidentifiervip.domain.usecase.historico.*
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -32,4 +34,8 @@ val useCaseModule = module {
     factoryOf(::ConfiguracionGlobalUseCase)
 
     factoryOf(::PrintUseCase)
+    factoryOf(::TicketPresentationUseCase)
+    factoryOf(::TicketModelOneUseCase)
+    factoryOf(::HistoricoImpresionUseCase)
+    factoryOf(::GetHistoricoByEmpleadoUseCase)
 }

@@ -19,7 +19,6 @@ data class SessionEntity(
     @ColumnInfo(name = "idEmpresa") val idEmpresa: String,
     @ColumnInfo(name = "idUsuario") val idUsuario: String = "",
     @ColumnInfo(name = "nameUser") val nameUser: String = "",
-    @ColumnInfo(name = "tokenJwt") val tokenJwt: String = "",
     @ColumnInfo(name = "state") val state: Int = SessionEntity.PENDING,
 ){
     companion object {
@@ -42,6 +41,5 @@ fun Session.toDatabase() = SessionEntity(
     idEmpresa = idEmpresa,
     idUsuario = idUsuario?:"",
     nameUser = nameUser?:"",
-    tokenJwt = tokenJwt?:"",
     state = state?:0,
 )

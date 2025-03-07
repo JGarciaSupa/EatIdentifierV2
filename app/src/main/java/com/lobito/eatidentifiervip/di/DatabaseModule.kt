@@ -2,8 +2,6 @@ package com.lobito.eatidentifiervip.di
 
 import android.content.Context
 import androidx.room.Room
-import com.lobito.eatidentifiervip.data.local.dao.EmpresaDao
-import com.lobito.eatidentifiervip.data.local.dao.SessionDao
 import com.lobito.eatidentifiervip.data.local.database.AppDatabase
 import org.koin.dsl.module
 
@@ -24,5 +22,6 @@ val dataModule = module {
     single { get<AppDatabase>().empleadoDao() }
     single { get<AppDatabase>().configuracionLocalDao() }
     single { get<AppDatabase>().configuracionGlobalDao() }
+    single { get<AppDatabase>().historicoImpresionDao() }
 
 }

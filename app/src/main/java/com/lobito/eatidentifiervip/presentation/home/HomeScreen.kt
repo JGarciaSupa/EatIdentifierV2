@@ -80,16 +80,6 @@ fun MainPrinterFaster(viewModel: HomeViewModel){
             ),
             color = Color.DarkGray
         )
-        Button(
-            onClick = {
-                viewModel.imprimir()
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-        ) {
-            Text("Imprimir Ticket")
-        }
         Image(
             painter = painterResource(id = R.drawable.qr_icon),
             contentDescription = null,
